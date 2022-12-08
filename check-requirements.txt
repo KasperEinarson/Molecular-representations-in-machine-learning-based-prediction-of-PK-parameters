@@ -1,0 +1,9 @@
+docutils
+check-manifest
+flake8
+readme-renderer
+pygments
+isort==5.4.2
+testbook
+pytest-cov
+pytest-mock
