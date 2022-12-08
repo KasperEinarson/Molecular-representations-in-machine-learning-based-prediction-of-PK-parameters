@@ -16,5 +16,3 @@ Here results for PK parameter Clearence (CL) with 4 insulin analogs with public 
 Clearly showing that including comprehensive molecular descriptors result in better predicting on testset. 
 
 --------
-
-<p><small>Project based on the <a target="_blank" href="https://sc216.corp.novocorp.net/modelling/mptprojects/projectcodetemplate.git">cookiecutter NN computational research area project template</a>. #computationalresearch</small></p>
