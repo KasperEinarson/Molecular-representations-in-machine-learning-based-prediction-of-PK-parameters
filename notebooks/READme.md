@@ -2,10 +2,10 @@
 
 ## Analysis divided into 5 parts indicated by prefix in notebook and python files
 1. Extract and create dataset (A: Create descriptors from nncd number (can only run if you have permission to all nncd), B: Create descriptors for analysis)
-2. Split data into folds (only used for ANN)
-3. Modelling (A: Random Forest, B: ANN)
+2. Split data into folds (only used for ANN) - grouped data as well
+3. Modelling (A: Random Forest, B: ANN) (A2 for grouped data analysis) 
 4. Calculation of SHAP values
-5. Figures and results
+5. Figures and results with additional experiments carried out.
 6. Supporting Information (A: Group-calculation used for Table 3 and S5, B: Figures/tables for Supporting information and table 3)
 
 ## Following molecular descriptors are considered for modelling:
