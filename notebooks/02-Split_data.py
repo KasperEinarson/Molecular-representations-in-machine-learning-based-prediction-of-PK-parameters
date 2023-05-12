@@ -1,14 +1,10 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 '''
 Notebook to split data into a user defined amount of folds for training, validation and test. This is done for the full descriptorset (DS1234) such that subsets of descriptors can be extracted in the model notebooks (RF, ANN).
 Splitting the data here is only used for ANN model later on. The exact same splitting is done within "Random_Forest.ipynb" for RF model seperately.
 Output: List of dataframes exported to folder "Processed data" which contains all relevant data splitted and scaled for each fold and ready as model (ANN) input.
 '''
+
+
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import GroupKFold,GroupShuffleSplit
@@ -21,17 +17,10 @@ sys.path.append('../src/insulin_pk/utils/')
 from utils import *
 get_ipython().system('jupyter nbconvert --to script "02-Split_data.ipynb"')
 
-
-# In[2]:
-
-
+# Load data
 Full_data = pd.read_csv("../data/processed/full_data_set.csv")
 Full_data.set_index("nncno",inplace=True)
 PK_names = ["CL[ml/min/kg]","T1/2[h]","MRT[h]"]
-
-
-# In[5]:
-
 
 X = Full_data.drop(PK_names,axis=1)
 Y = Full_data[PK_names]
@@ -75,24 +64,17 @@ for i in range(len(idx_outer)):
 with open('../data/processed/Data_folds.pkl','wb') as f:pickle.dump(data_folds,f )             
 
 
-# # Grouped data for ANN
-
-# In[6]:
-
+# Grouped data splits for ANN
 
 #Create data with groups
 Data_with_groups = pd.read_excel("../data/raw/Data_with_groups.xlsx")
 Data_with_groups.rename(columns={"NNCNo": "nncno"})
 Data_with_groups.set_index("NNCNo",inplace=True)
-Data_with_groups = Data_with_groups[~Data_with_groups.index.isin(["0148-0000-1247"])]
 Full_data = pd.read_csv("../data/processed/full_data_set.csv")
 Full_data.set_index("nncno",inplace=True)
 PK_names = ["CL[ml/min/kg]","T1/2[h]","MRT[h]"]
 data_wg = pd.merge(Full_data, Data_with_groups["Groups"], left_index=True, right_index=True)
 data_wg.index.name = "nncno"
-
-
-# In[24]:
 
 
 groups = ["Other", 'Acylation', 'No attachments', 'Concatenated proteins',
