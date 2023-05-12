@@ -1,13 +1,10 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
 
 '''
 Retrieve data from novo nordisk internal database both on descriptors and PK data.
 Select descriptors of interest and create embeddings from sequential data.
-Output: Exports final (full) dataset for further analysis.
+
+
+Output: Exports final (full) dataset for further analysis (Pandas Dataframe).
 
 '''
 import novopy
@@ -32,9 +29,6 @@ np.random.seed(seed)
 random.seed(seed)
 
 get_ipython().system('jupyter nbconvert --to script "01b-Create_data.ipynb"')
-
-
-# In[2]:
 
 
 '''
@@ -343,19 +337,13 @@ def make_DS4_embedding(SMILES_string, Concat = "sum"):
     
     return SMILES_word2vec_embedding
 
-
-# # Load PK data and descriptors for all analogs using above functions
-
-# In[3]:
-
+## ================ MAIN ==========================================================
+# Load PK data and descriptors for all analogs using above functions
 
 DS1, DS2, DS3_raw, DS4_raw = select_descriptors_and_analogs(path = "../data/processed/Descriptors_directly_from_nncd.csv")
 PK_data = load_PK_data("../data/raw/nonSedatedRatData_Updated.xlsx")
 PK_data = PK_data[PK_data.index.isin(DS1.index)]
 DS4_raw_no_none = remove_None(DS4_raw)
-
-
-# In[4]:
 
 
 # Make DS3 embedding:
@@ -370,17 +358,10 @@ DS3 = DS3.add_prefix('DS3_')
 DS4 = make_DS4_embedding(DS4_raw_no_none,Concat = "sum")
 DS4.columns = DS4.columns.str.replace('^SMILES', 'DS4')
 
-
-# In[5]:
-
-
 # Export full dataset (all descriptors + PK data)
 Full_data = pd.concat([DS1,DS2,DS3,DS4,PK_data],axis=1)
 # Last row is all NAs:
 Full_data = Full_data[:-1]
-
-
-# In[6]:
 
 
 # Save the full data set to csv:
